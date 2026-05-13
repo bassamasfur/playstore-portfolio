@@ -1,0 +1,68 @@
+<div class="app-list-container">
+  <header class="page-header">
+    <div class="header-content">
+      <a routerLink="/" class="back-link">← Inicio</a>
+      <h1>Aplicaciones fijadas</h1>
+      <p class="apps-count">{{ apps().length }} aplicaciones</p>
+    </div>
+  </header>
+
+  <div class="apps-grid">
+    @for (app of apps(); track app.id) {
+      <article class="app-card">
+        <div class="app-header">
+          <div class="app-icon">{{ app.icon }}</div>
+          <div class="app-info">
+            <h2>{{ app.name }}</h2>
+            <p class="package-name">{{ app.packageName }}</p>
+            <div class="app-meta">
+              <span class="last-update">Última actualización: {{ app.lastUpdate }}</span>
+              <span class="status" [class]="getStatusClass(app.status)">
+                {{ getStatusText(app.status) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-description">
+          <p>{{ app.shortDescription }}</p>
+        </div>
+
+        <div class="app-stats">
+          <div class="stat-item">
+            <div class="stat-label">Usuarios con la aplicación descargada</div>
+            <div class="stat-value">{{ app.stats.downloads }}</div>
+            <div class="stat-change" [class.negative]="app.downloadPercentage < 0" [class.neutral]="app.downloadPercentage === 0">
+              {{ app.downloadPercentage > 0 ? '+' : '' }}{{ app.downloadPercentage }}% comparado con los 30 días anteriores
+            </div>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-label">Adquisición de usuarios</div>
+            <div class="stat-value">{{ app.stats.acquisitions }}</div>
+            <div class="stat-change" [class.negative]="app.acquisitionPercentage < 0" [class.neutral]="app.acquisitionPercentage === 0">
+              {{ app.acquisitionPercentage > 0 ? '+' : '' }}{{ app.acquisitionPercentage }}% comparado con los 30 días anteriores
+            </div>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-label">Valoración en Google Play</div>
+            <div class="stat-value">{{ app.stats.rating > 0 ? app.stats.rating : '-' }} @if (app.stats.rating > 0) { <span class="star">★</span> }</div>
+          </div>
+
+          <div class="stat-item">
+            <div class="stat-label">Ingresos brutos (USD)</div>
+            <div class="stat-value">{{ app.stats.revenue }}</div>
+            <div class="stat-change" [class.neutral]="app.revenuePercentage === 0">
+              {{ app.revenuePercentage }}% comparado con los 30 días anteriores
+            </div>
+          </div>
+        </div>
+
+        <div class="app-actions">
+          <a [routerLink]="['/apps', app.id]" class="btn-detail">Ver detalles →</a>
+        </div>
+      </article>
+    }
+  </div>
+</div>

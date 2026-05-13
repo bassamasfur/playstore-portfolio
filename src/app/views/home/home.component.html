@@ -1,0 +1,53 @@
+<div class="home-container">
+  <header class="header">
+    <div class="icon">📱</div>
+    <h1>Google Play Console</h1>
+    <p class="subtitle">Panel de desarrollador</p>
+  </header>
+
+  <section class="developer-info">
+    <h2>{{ developerName() }}</h2>
+    <p class="account-type">Cuenta personal</p>
+    <p class="account-id">ID de cuenta: 5188124797212086585</p>
+  </section>
+
+  <section class="stats">
+    <div class="stat-card">
+      <div class="stat-icon">📦</div>
+      <div class="stat-content">
+        <h3>{{ totalApps() }}</h3>
+        <p>Aplicaciones</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-content">
+        <h3>1</h3>
+        <p>En producción</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🧪</div>
+      <div class="stat-content">
+        <h3>1</h3>
+        <p>En prueba</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="actions">
+    <a routerLink="/apps" class="btn-primary">
+      Ver aplicaciones
+      <span class="arrow">→</span>
+    </a>
+  </section>
+
+  <section class="ads-info">
+    <div class="info-card">
+      <h3>📄 app-ads.txt verificado</h3>
+      <p>El archivo app-ads.txt está configurado correctamente y accesible en:</p>
+      <code>/app-ads.txt</code>
+      <p class="note">Este archivo funciona para todas las aplicaciones del desarrollador</p>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,130 @@
+<div class="app-detail-container">
+  @if (app(); as currentApp) {
+    <header class="page-header">
+      <a routerLink="/apps" class="back-link">← Volver a aplicaciones</a>
+      <div class="app-header">
+        <div class="app-icon">{{ currentApp.icon }}</div>
+        <div class="app-info">
+          <h1>{{ currentApp.name }}</h1>
+          <p class="package-name">{{ currentApp.packageName }}</p>
+          <div class="app-meta">
+            <span class="status" [class]="getStatusClass(currentApp.status)">
+              {{ getStatusText(currentApp.status) }}
+            </span>
+            <span class="last-update">Última actualización: {{ currentApp.lastUpdate }}</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-grid">
+      <section class="description-section">
+        <h2>📝 Descripción</h2>
+        <p class="short-description">{{ currentApp.shortDescription }}</p>
+        <p class="full-description">{{ currentApp.description }}</p>
+      </section>
+
+      <section class="stats-section">
+        <h2>📊 Estadísticas</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+              <div class="stat-label">Usuarios con la aplicación</div>
+              <div class="stat-value">{{ currentApp.stats.downloads }}</div>
+              <div class="stat-change" [class.negative]="currentApp.downloadPercentage < 0" [class.neutral]="currentApp.downloadPercentage === 0">
+                {{ currentApp.downloadPercentage > 0 ? '↗' : currentApp.downloadPercentage < 0 ? '↘' : '→' }}
+                {{ currentApp.downloadPercentage > 0 ? '+' : '' }}{{ currentApp.downloadPercentage }}%
+                <span class="change-label">vs. 30 días anteriores</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📥</div>
+            <div class="stat-content">
+              <div class="stat-label">Adquisición de usuarios</div>
+              <div class="stat-value">{{ currentApp.stats.acquisitions }}</div>
+              <div class="stat-change" [class.negative]="currentApp.acquisitionPercentage < 0" [class.neutral]="currentApp.acquisitionPercentage === 0">
+                {{ currentApp.acquisitionPercentage > 0 ? '↗' : currentApp.acquisitionPercentage < 0 ? '↘' : '→' }}
+                {{ currentApp.acquisitionPercentage > 0 ? '+' : '' }}{{ currentApp.acquisitionPercentage }}%
+                <span class="change-label">vs. 30 días anteriores</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-content">
+              <div class="stat-label">Valoración en Google Play</div>
+              <div class="stat-value">
+                @if (currentApp.stats.rating > 0) {
+                  {{ currentApp.stats.rating }} <span class="star">★</span>
+                } @else {
+                  <span class="no-rating">Sin valoraciones</span>
+                }
+              </div>
+              @if (currentApp.stats.totalRatings > 0) {
+                <div class="stat-info">{{ currentApp.stats.totalRatings }} valoraciones</div>
+              }
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-content">
+              <div class="stat-label">Ingresos brutos (USD)</div>
+              <div class="stat-value">${{ currentApp.stats.revenue }}</div>
+              <div class="stat-change" [class.neutral]="currentApp.revenuePercentage === 0">
+                {{ currentApp.revenuePercentage > 0 ? '↗' : currentApp.revenuePercentage < 0 ? '↘' : '→' }}
+                {{ currentApp.revenuePercentage }}%
+                <span class="change-label">vs. 30 días anteriores</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-section">
+        <h2>ℹ️ Información adicional</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <strong>Estado:</strong>
+            <span>{{ getStatusText(currentApp.status) }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Última actualización:</strong>
+            <span>{{ currentApp.lastUpdate }}</span>
+          </div>
+          <div class="info-item">
+            <strong>Paquete:</strong>
+            <span class="package">{{ currentApp.packageName }}</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="ads-section">
+        <h2>📄 app-ads.txt</h2>
+        <div class="ads-info">
+          <p>El archivo app-ads.txt está correctamente configurado para todas las aplicaciones.</p>
+          <div class="ads-file">
+            <strong>Ubicación:</strong> <code>/app-ads.txt</code>
+          </div>
+          <div class="ads-content">
+            <strong>Contenido:</strong>
+            <pre>google.com, pub-9670246345724768, DIRECT, f08c47fec0942fa0</pre>
+          </div>
+          <p class="ads-note">
+            ✅ Este archivo funciona para todas las aplicaciones del mismo desarrollador. No es necesario crear uno por cada app.
+          </p>
+        </div>
+      </section>
+    </div>
+  } @else {
+    <div class="not-found">
+      <h2>❌ Aplicación no encontrada</h2>
+      <p>La aplicación que buscas no existe.</p>
+      <a routerLink="/apps" class="btn-back">Volver a aplicaciones</a>
+    </div>
+  }
+</div>
